@@ -20,9 +20,12 @@ set vb t_vb=  "ビープ音ならないようにする"
 "##########wildmenuを有効にする（同じ階層のファイルを開く時tab選択ができるようになる。）
 set wildmenu
 "##########本読んで追加#########
+" <Leader>evの向いている先はvimとneovimで変えているので注意
 nnoremap <Leader>ev :e ~/.config/nvim/init.vim
 nnoremap <Leader>cv :e ~/dotfiles/cheatsheets/vim.txt
 nnoremap <Leader>m  :MRU
+"#####垂直分割差分比較
+nnoremap :vd :vertical diffsplit
 let g:EasyMotion_do_mapping=0
 nmap <C-f> <Plug>(easymotion-overwin-f)
 
@@ -42,10 +45,10 @@ map sH <c-w>t<c-w>H
 "垂直分割を水平分割に直す
 map sK <c-w>t<c-w>K
 map <Space> <C-w>w
-nmap s<left> <C-w><
-nmap s<right> <C-w>>
 nmap s+ <C-w>+
 nmap s- <C-w>-
+nmap s> <C-w>>
+nmap s< <C-w><
 "カーソル下のファイルを開く
 "縦割り
 nmap sf :vertical wincmd f<CR> <c-w>r
@@ -59,6 +62,8 @@ nnoremap :bp :bprevious<CR>
 nnoremap :bn :bnext<CR>
 "垂直分割での差分比較キーマップ
 nnoremap :vd :vertical diffsplit
+"ターミナルを垂直分割で開くショートカット
+nnoremap :vt :vert ter
 "###Tagbarの呪文をキーマッピング
 nnoremap <Leader>t  :TagbarOpenAutoClose<CR>
 nnoremap <Leader>T  :echo tagbar#currenttag('[%s]', 'No tags')<CR>
@@ -82,8 +87,8 @@ augroup END
 let g:translate_source = "en"
 let g:translate_target = "ja"
 let g:translate_winsize = 10
-vnoremap <F3> :Translate
-vnoremap <F4> :Translate! conflict
+vnoremap <F3> :Translate<CR>
+vnoremap <F4> :Translate!<CR>
 "タブ空白、改行の可視化
 set list
 set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
@@ -101,6 +106,8 @@ if has('syntax')
     augroup END
     call ZenkakuSpace()
 endif
+"Vimhelpの日本語化
+set helplang=ja,en
 "##############vim-plugでプラグインを管理#############
 call plug#begin()
 Plug 'easymotion/vim-easymotion'
@@ -173,9 +180,19 @@ let g:UltiSnipsEditSplit="vertical"
 let g:closetag_filenames = '*.html,*.php'
 "######vim-airlineの設定
 let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
-
 "######カレントウィンドウを新規タブで開きなおす
   nnoremap :tt :tab ba
+"vim-fugitiveのコマンド省略形
+nnoremap <leader>ga :Git add %:p
+nnoremap <leader>gc :Git commit
+nnoremap <leader>gs :Git
+nnoremap <leader>gp :Gpush
+nnoremap <leader>gd :Gdiff
+nnoremap <leader>gv :Gvdiff
+"ほぼ記憶用
+nnoremap <leader>gl :Git log
+nnoremap <leader>gcl :Gclog
+nnoremap <leader>gb :Gblame
 
 "#####vimwikiを正常動作させるのに必要らしい
 set nocompatible
@@ -190,7 +207,17 @@ let g:vsession_use_fzf = 1
 command! -nargs=* Ut split | wincmd j | resize 20 | terminal <args>
 autocmd TermOpen * startinsert
 
-"############treesitter用の設定
+"nvimにてcoc.nvimとかが出したpopupwindowのスクロール用
+	if has('nvim-0.4.0') || has('patch-8.2.0750')
+	  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+	  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+	  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+	  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+	  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+	  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+	endif
+
+"treesitter用の設定
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -198,6 +225,9 @@ require'nvim-treesitter.configs'.setup {
     disable = {
       'lua',
     }
+  },
+  indent = {
+    enable = true, -- これを設定することでtree-sitterによるインデントを有効にできます
   }
 }
 EOF
