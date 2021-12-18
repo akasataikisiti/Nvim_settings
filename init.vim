@@ -186,7 +186,7 @@ let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
 nnoremap <leader>ga :Git add %:p
 nnoremap <leader>gc :Git commit
 nnoremap <leader>gs :Git
-nnoremap <leader>gp :Gpush
+nnoremap <leader>gp :Git push
 nnoremap <leader>gd :Gdiff
 nnoremap <leader>gv :Gvdiff
 "ほぼ記憶用
