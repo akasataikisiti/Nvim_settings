@@ -83,7 +83,7 @@ let g:translate_source = "en"
 let g:translate_target = "ja"
 let g:translate_winsize = 10
 vnoremap <F3> :Translate
-vnoremap <F4> :Translate!
+vnoremap <F4> :Translate! conflict
 "タブ空白、改行の可視化
 set list
 set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
