@@ -132,6 +132,7 @@ Plug 'https://github.com/adelarsq/vim-matchit'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'thinca/vim-prettyprint'
 Plug 'thinca/vim-quickrun'
 if has('nvim')
@@ -184,7 +185,8 @@ let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
   nnoremap :tt :tab ba
 "vim-fugitiveのコマンド省略形
 nnoremap <leader>ga :Git add %:p
-nnoremap <leader>gc :Git commit
+nnoremap <leader>gco :Git commit
+nnoremap <leader>gch :GCheckout    "これだけfzf/checkoutの機能だけど意味的にここに記載
 nnoremap <leader>gs :Git
 nnoremap <leader>gp :Git push
 nnoremap <leader>gd :Gdiff
