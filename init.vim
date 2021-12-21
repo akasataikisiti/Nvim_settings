@@ -27,7 +27,7 @@ nnoremap <Leader>m  :MRU
 "#####垂直分割差分比較
 nnoremap :vd :vertical diffsplit
 let g:EasyMotion_do_mapping=0
-nmap <C-f> <Plug>(easymotion-overwin-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
 
 "####レジスタ使用しない削除機能
 nnoremap <leader>d "_d
@@ -40,6 +40,7 @@ map sj <C-w>j
 map sl <C-w>l
 map sr <C-w>r
 map sR <C-w>R
+map so <C-w><C-o>
 "水平分割を垂直分割に直す
 map sH <c-w>t<c-w>H
 "垂直分割を水平分割に直す
@@ -122,6 +123,7 @@ Plug 'sirver/ultisnips'
 Plug 'jiangmiao/auto-pairs'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'skanehira/vsession'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
@@ -186,7 +188,8 @@ let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
 "vim-fugitiveのコマンド省略形
 nnoremap <leader>ga :Git add %:p
 nnoremap <leader>gco :Git commit
-nnoremap <leader>gch :GCheckout    "これだけfzf/checkoutの機能だけど意味的にここに記載
+"FzfGBranchesだけfzf-checkoutの機能
+nnoremap <leader>gch :FzfGBranches
 nnoremap <leader>gs :Git
 nnoremap <leader>gp :Git push
 nnoremap <leader>gd :Gdiff
@@ -204,6 +207,9 @@ syntax on
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 "###nvimでskanehira/vsessionを動かすためにfzfと連携させる記述
 let g:vsession_use_fzf = 1
+"###fzf-checkoutの設定
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_checkout_git_options = '--sort=-committerdate'
 "terminalモードを使いやすく
 :tnoremap <c-[> <C-\><C-n>
 command! -nargs=* Ut split | wincmd j | resize 20 | terminal <args>
