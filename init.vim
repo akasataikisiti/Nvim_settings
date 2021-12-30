@@ -38,6 +38,7 @@ map sj <C-w>j
 map sl <C-w>l
 map sr <C-w>r
 map sR <C-w>R
+map so <C-w><C-o>
 "水平分割を垂直分割に直す
 map sH <c-w>t<c-w>H
 "垂直分割を水平分割に直す
@@ -97,7 +98,7 @@ set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
 function! ZenkakuSpace()
     highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
 endfunction
-   
+
 if has('syntax')
     augroup ZenkakuSpace
         autocmd!
@@ -122,6 +123,7 @@ Plug 'sirver/ultisnips'
 Plug 'jiangmiao/auto-pairs'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'skanehira/vsession'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
@@ -135,6 +137,7 @@ Plug 'https://github.com/adelarsq/vim-matchit'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'thinca/vim-prettyprint'
 Plug 'thinca/vim-quickrun'
 Plug 'nekowasabi/nvimdoc-ja'
@@ -154,6 +157,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 "#onlynvim
+" Plug 'vim-vdebug/vdebug'
 call plug#end()
 
 "#########ack.vimを動かさせるために以下の記述が必要だった。
@@ -178,8 +182,6 @@ let g:UltiSnipsSnippetsDir=expand("$HOME/dotfiles/.vim/UltiSnips")
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-l>"
 let g:UltiSnipsEditSplit="vertical"
-
-
 "######vim-closetagをphpファイルでも有効にする。
 let g:closetag_filenames = '*.html,*.php'
 "######vim-airlineの設定
@@ -188,9 +190,11 @@ let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
   nnoremap :tt :tab ba
 "vim-fugitiveのコマンド省略形
 nnoremap <leader>ga :Git add %:p
-nnoremap <leader>gc :Git commit
+nnoremap <leader>gco :Git commit
+"FzfGBranchesだけfzf-checkoutの機能
+nnoremap <leader>gch :FzfGBranches
 nnoremap <leader>gs :Git
-nnoremap <leader>gp :Gpush
+nnoremap <leader>gp :Git push
 nnoremap <leader>gd :Gdiff
 nnoremap <leader>gv :Gvdiff
 "ほぼ記憶用
@@ -206,20 +210,23 @@ syntax on
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 "###nvimでskanehira/vsessionを動かすためにfzfと連携させる記述
 let g:vsession_use_fzf = 1
+"###fzf-checkoutの設定
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_checkout_git_options = '--sort=-committerdate'
 "terminalモードを使いやすく
 :tnoremap <c-[> <C-\><C-n>
 command! -nargs=* Ut split | wincmd j | resize 20 | terminal <args>
 autocmd TermOpen * startinsert
 
 "nvimにてcoc.nvimとかが出したpopupwindowのスクロール用
-	if has('nvim-0.4.0') || has('patch-8.2.0750')
-	  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-	  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-	  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-	  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-	  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-	  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-	endif
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 "treesitter用の設定
 lua <<EOF
@@ -248,3 +255,22 @@ EOF
 
 nnoremap ;c :HopChar1<CR>
 nnoremap ;l :HopLine<CR>
+
+"vdebug用
+" let g:vdebug_options= {
+" \    "port" : 9000,
+" \    "server" : '',
+" \    "timeout" : 20,
+" \    "on_close" : 'detach',
+" \    "break_on_open" : 1,
+" \    "ide_key" : '',
+" \    "path_maps" : {},
+" \    "debug_window_level" : 0,
+" \    "debug_file_level" : 0,
+" \    "debug_file" : "",
+" \    "watch_window_style" : 'expanded',
+" \    "marker_default" : '⬦',
+" \    "marker_closed_tree" : '▸',
+" \    "marker_open_tree" : '▾'
+" \}
+" let g:vdebug_options['path_maps'] = {"/": "/mnt/d/work/NucleusCMS"}
