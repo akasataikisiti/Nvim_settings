@@ -128,11 +128,9 @@ Plug 'skanehira/vsession'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'skanehira/translate.vim'
-Plug 'vim-scripts/ScrollColors'
-Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
-Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} "vscodeのliveserver的なもの 
+" Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} "vscodeのliveserver的なもの 
 Plug 'https://github.com/adelarsq/vim-matchit'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
