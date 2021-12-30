@@ -26,8 +26,6 @@ nnoremap <Leader>cv :e ~/dotfiles/cheatsheets/vim.txt
 nnoremap <Leader>m  :MRU
 "#####垂直分割差分比較
 nnoremap :vd :vertical diffsplit
-let g:EasyMotion_do_mapping=0
-nmap <C-f> <Plug>(easymotion-overwin-f)
 
 "####レジスタ使用しない削除機能
 nnoremap <leader>d "_d
@@ -83,6 +81,8 @@ augroup Yank
 augroup END
 "ステータスラインにgithubの状態を追加
 " set statusline=%<%f\ %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%)\ %P
+"Yankしたものをubuntuのクリップボードと共有する。
+set clipboard+=unnamed
 "translatevim用の設定
 let g:translate_source = "en"
 let g:translate_target = "ja"
@@ -110,7 +110,7 @@ endif
 set helplang=ja,en
 "##############vim-plugでプラグインを管理#############
 call plug#begin()
-Plug 'easymotion/vim-easymotion'
+Plug 'phaazon/hop.nvim'
 Plug 'yegappan/mru'
 Plug 'tpope/vim-commentary'
 " Plug 'mileszs/ack.vim'
@@ -126,14 +126,18 @@ Plug 'skanehira/vsession'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'skanehira/translate.vim'
+Plug 'vim-scripts/ScrollColors'
+Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} "vscodeのliveserver的なもの 
 Plug 'https://github.com/adelarsq/vim-matchit'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'thinca/vim-prettyprint'
 Plug 'thinca/vim-quickrun'
+Plug 'nekowasabi/nvimdoc-ja'
 if has('nvim')
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -237,3 +241,10 @@ set t_Co=256
 set background=dark
 colorscheme hybrid
 
+"####hop.nvim使うのに必要
+lua<<EOF
+require'hop'.setup()
+EOF
+
+nnoremap ;c :HopChar1<CR>
+nnoremap ;l :HopLine<CR>
