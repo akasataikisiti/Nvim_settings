@@ -15,10 +15,13 @@ set ignorecase "大文字/小文字の区別なく検索する
 set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
 set hlsearch  "マッチ箇所をハイライト
 "##########環境設定################
-set vb t_vb=  "ビープ音ならないようにする"
+"下にあらたに変えてみた問題無かったらそれで行く
+" set vb t_vb=  "ビープ音ならないようにする"
+set belloff=all
 
 "##########wildmenuを有効にする（同じ階層のファイルを開く時tab選択ができるようになる。）
-set wildmenu
+"よくわからんけど要らない気がするからコメントアウトする
+" set wildmenu
 "##########本読んで追加#########
 " <Leader>evの向いている先はvimとneovimで変えているので注意
 nnoremap <Leader>ev :e ~/.config/nvim/init.vim
@@ -39,6 +42,8 @@ map sl <C-w>l
 map sr <C-w>r
 map sR <C-w>R
 map so <C-w><C-o>
+"カーソル下のウィンドウを次のウィンドウと交換
+map so <C-w><C-x>
 "水平分割を垂直分割に直す
 map sH <c-w>t<c-w>H
 "垂直分割を水平分割に直す
@@ -48,6 +53,7 @@ nmap s+ <C-w>+
 nmap s- <C-w>-
 nmap s> <C-w>>
 nmap s< <C-w><
+nmap s= <C-w>=
 "カーソル下のファイルを開く
 "縦割り
 nmap sf :vertical wincmd f<CR> <c-w>r
@@ -68,6 +74,8 @@ nnoremap <Leader>t  :TagbarOpenAutoClose<CR>
 nnoremap <Leader>T  :echo tagbar#currenttag('[%s]', 'No tags')<CR>
 "###UndoTree呼び出し、閉じる
 nnoremap <F5>  :UndotreeToggle<cr>
+" インサートモード中に<C-s>でセーブして改行してインサートモードに入る
+imap <C-s> <C-[>:w<CR>o
 "###相対行表示の切り替え
 " nnoremap <F3> :<C-u>setlocal relativenumber!<CR>
 "###各種拡張子ファイルが更新されたら自動でctagsファイルを更新
@@ -120,6 +128,7 @@ Plug 'mbbill/undotree'
 Plug 'neoclide/coc.nvim',{'branch': 'release'}
 Plug 'alvan/vim-closetag'
 Plug 'sirver/ultisnips'
+Plug 'mlaursen/vim-react-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
@@ -150,6 +159,7 @@ else
 endif
 Plug 'kristijanhusak/defx-icons'
 Plug 'ryanoasis/vim-devicons'
+Plug 'kristijanhusak/defx-git'
 "#onlynvim
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -157,6 +167,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 "#onlynvim
+" neovim用のlua開発 -開始
+Plug 'tjdevries/nlua.nvim'
+" neovim用のlua開発 -終わり
 Plug 'vim-vdebug/vdebug'
 call plug#end()
 
@@ -234,7 +247,7 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
     disable = {
-      'lua',
+      'toml',
     }
   },
   indent = {
