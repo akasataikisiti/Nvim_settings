@@ -189,8 +189,11 @@ let g:coc_global_extensions = [
       \, 'coc-snippets'
       \, 'coc-vetur'
       \ ]
-"#######UltiSnipsのスニペットファイル置き場の定義
-let g:UltiSnipsSnippetsDir=expand("$HOME/dotfiles/.vim/UltiSnips")
+"#######UltiSnipsのスニペットファイル（自作の)置き場の定義
+" for vim
+" let g:UltiSnipsSnippetsDir=expand("$HOME/dotfiles/.vim/UltiSnips")
+" for Neovim
+let g:UltiSnipsSnippetsDir=expand("$HOME/.config/nvim/UltiSnips")
 "########UltiSnipsの起動とリスト表示
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-l>"

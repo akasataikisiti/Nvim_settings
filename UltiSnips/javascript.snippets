@@ -1,0 +1,7 @@
+snippet rand "[Snippet ] Random number between 0(inclusive) to max(exclusive)"
+Math.floor(Math.random() * ${1:MaxNumber})
+endsnippet
+
+snippet rands "[Snippet ] Random number between min(inclusive) to max(inclusive)"
+Math.floor(Math.random() * ${1:MaxNumber} + 1 - ${2:MinNumber}) + $2
+endsnippet
