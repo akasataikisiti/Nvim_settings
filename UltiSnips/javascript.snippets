@@ -5,3 +5,16 @@ endsnippet
 snippet rands "[Snippet ] Random number between min(inclusive) to max(inclusive)"
 Math.floor(Math.random() * ${1:MaxNumber} + 1 - ${2:MinNumber}) + $2
 endsnippet
+
+snippet fet "[Snippet ] Use Fetch API"
+fetch(${1:url})
+	.then(response => response.json())
+	.then(data => ${2:console.log(data)});
+endsnippet
+
+snippet fete "[Snippet ] Use Fetch API and catch err"
+fetch(${1:url})
+	.then(response => response.json())
+	.then(data => {${2:console.log(data)}})
+	.catch((err) => {${3:console.log('Error: ',err)}});
+endsnippet

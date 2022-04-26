@@ -5,7 +5,7 @@ nnoremap <silent> <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<c
 nnoremap <silent> <Leader>fb <cmd>lua require('telescope.builtin').file_browser()<cr>
 nnoremap <silent> <Leader><Space> <cmd>Telescope buffers<cr>
 nnoremap <expr> <Leader>fu ':Telescope live_grep<cr>' .  expand('<cword>')
-nnoremap <expr> <Leader>fp ':Telescope project'
+nnoremap <expr> <Leader>fp ':Telescope project<cr>'
 xnoremap <leader>fv "zy:<C-u> Telescope live_grep<cr> <C-r>z
 nnoremap <leader>fz :<C-u> Telescope live_grep<cr> <C-r>z
 " vimのhelptagsを検索できるけどいったんはずす

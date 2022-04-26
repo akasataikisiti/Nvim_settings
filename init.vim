@@ -4,7 +4,7 @@ set number "行番号を設定する
 set showmatch "『』入力時の対応する括弧を表示
 set shiftwidth=2 "自動シフトの幅"
 set expandtab "タブのスペース展開"
-set tabstop=2 "インデントをスペース４つ分に設定
+set tabstop=2 "インデントをスペース２つ分に設定
 
 "########swpファイル、バックアップファイル、undoファイルを出力させない。
 set noswapfile
@@ -18,6 +18,8 @@ set hlsearch  "マッチ箇所をハイライト
 "下にあらたに変えてみた問題無かったらそれで行く
 " set vb t_vb=  "ビープ音ならないようにする"
 set belloff=all
+"マウス使えるようにする
+set mouse=a
 
 "##########wildmenuを有効にする（同じ階層のファイルを開く時tab選択ができるようになる。）
 "よくわからんけど要らない気がするからコメントアウトする
@@ -139,6 +141,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'skanehira/translate.vim'
 Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
+Plug 'tomasr/molokai'
 " Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} "vscodeのliveserver的なもの 
 Plug 'https://github.com/adelarsq/vim-matchit'
 Plug 'vim-jp/vimdoc-ja'
@@ -149,7 +152,8 @@ Plug 'thinca/vim-prettyprint'
 Plug 'thinca/vim-quickrun'
 Plug 'nekowasabi/nvimdoc-ja'
 Plug 'ap/vim-css-color'
-Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
+Plug 'Yggdroot/indentLine'
+Plug 'kshenoy/vim-signature'
 if has('nvim')
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -160,17 +164,21 @@ endif
 Plug 'kristijanhusak/defx-icons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kristijanhusak/defx-git'
+
 "#onlynvim
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'nvim-telescope/telescope-project.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
-"#onlynvim
-" neovim用のlua開発 -開始
-Plug 'tjdevries/nlua.nvim'
-" neovim用のlua開発 -終わり
-Plug 'vim-vdebug/vdebug'
+if has('nvim')
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+  Plug 'nvim-telescope/telescope-project.nvim'
+  Plug 'nvim-telescope/telescope-fzy-native.nvim'
+  Plug 'karb94/neoscroll.nvim'
+  "#onlynvim
+  " neovim用のlua開発 -開始
+  Plug 'tjdevries/nlua.nvim'
+  " neovim用のlua開発 -終わり
+  Plug 'vim-vdebug/vdebug'
+endif
 call plug#end()
 
 "#########ack.vimを動かさせるために以下の記述が必要だった。
@@ -224,6 +232,8 @@ filetype plugin on
 syntax on
 "####coc-nvim(coc-prettier)でprettierを使用する。為の記述
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"####coc-nevimのcoc-cssをscssファイルに適用させる
+autocmd FileType scss setl iskeyword+=@-@
 "###nvimでskanehira/vsessionを動かすためにfzfと連携させる記述
 let g:vsession_use_fzf = 1
 "###fzf-checkoutの設定
@@ -272,10 +282,8 @@ EOF
 nnoremap ;f :HopChar1<CR>
 nnoremap ;l :HopLine<CR>
 
-"minimap用
-let g:minimap_width = 10
-let g:minimap_auto_start = 0
-let g:minimap_auto_start_win_enter = 1
+"karb94/neoscroll.nvim用
+lua require('neoscroll').setup()
 
 "vdebug用
 let g:vdebug_options= {
