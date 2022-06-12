@@ -1,20 +1,28 @@
-snippet rand "[Snippet ] Random number between 0(inclusive) to max(exclusive)"
+snippet rand "[MyMySnippet] Random number between 0(inclusive) to max(exclusive)"
 Math.floor(Math.random() * ${1:MaxNumber})
 endsnippet
 
-snippet rands "[Snippet ] Random number between min(inclusive) to max(inclusive)"
+snippet rands "[MySnippet] Random number between min(inclusive) to max(inclusive)"
 Math.floor(Math.random() * ${1:MaxNumber} + 1 - ${2:MinNumber}) + $2
 endsnippet
 
-snippet fet "[Snippet ] Use Fetch API"
+snippet fet "[MySnippet] Use Fetch API"
 fetch(${1:url})
 	.then(response => response.json())
 	.then(data => ${2:console.log(data)});
 endsnippet
 
-snippet fete "[Snippet ] Use Fetch API and catch err"
+snippet fete "[MySnippet] Use Fetch API and catch err"
 fetch(${1:url})
 	.then(response => response.json())
 	.then(data => {${2:console.log(data)}})
 	.catch((err) => {${3:console.log('Error: ',err)}});
+endsnippet
+
+
+snippet ioo "[MySnippet] iterate over the object"
+const entries = Object.entries(${1:object});
+for(const [key,value] of entries){
+  console.log($1[key])
+}
 endsnippet

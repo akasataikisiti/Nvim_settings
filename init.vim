@@ -6,6 +6,15 @@ set shiftwidth=2 "自動シフトの幅"
 set expandtab "タブのスペース展開"
 set tabstop=2 "インデントをスペース２つ分に設定
 
+set cursorline
+:highlight Cursorline cterm=bold ctermbg=black "カーソル位置見やすく
+set nowrap "折り返さない
+" set inccommand=split
+set inccommand=nosplit
+syntax enable
+"python2無効
+let g:loaded_python_provider = 0
+
 "########swpファイル、バックアップファイル、undoファイルを出力させない。
 set noswapfile
 set nobackup
@@ -34,6 +43,7 @@ nnoremap :vd :vertical diffsplit
 
 "####レジスタ使用しない削除機能
 nnoremap <leader>d "_d
+nnoremap <leader>D "_D
 nnoremap x "_x
 
 "########ウィンドウ操作マッピング
@@ -75,7 +85,7 @@ nnoremap :vt :vert ter
 nnoremap <Leader>t  :TagbarOpenAutoClose<CR>
 nnoremap <Leader>T  :echo tagbar#currenttag('[%s]', 'No tags')<CR>
 "###UndoTree呼び出し、閉じる
-nnoremap <F5>  :UndotreeToggle<cr>
+nnoremap tu  :UndotreeToggle<cr>
 " インサートモード中に<C-s>でセーブして改行してインサートモードに入る
 imap <C-s> <C-[>:w<CR>o
 "###相対行表示の切り替え
@@ -142,7 +152,7 @@ Plug 'skanehira/translate.vim'
 Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
 Plug 'tomasr/molokai'
-" Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} "vscodeのliveserver的なもの 
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} "vscodeのliveserver的なもの 
 Plug 'https://github.com/adelarsq/vim-matchit'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -164,6 +174,7 @@ endif
 Plug 'kristijanhusak/defx-icons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kristijanhusak/defx-git'
+Plug 'puremourning/vimspector'
 
 "#onlynvim
 if has('nvim')
@@ -177,7 +188,6 @@ if has('nvim')
   " neovim用のlua開発 -開始
   Plug 'tjdevries/nlua.nvim'
   " neovim用のlua開発 -終わり
-  Plug 'vim-vdebug/vdebug'
 endif
 call plug#end()
 
@@ -189,11 +199,11 @@ let g:coc_global_extensions = [
       \  'coc-lists'
       \, 'coc-json'
       \, 'coc-marketplace'
+      \, 'coc-pyright'
       \, 'coc-html'
       \, 'coc-css'
       \, 'coc-tsserver'
       \, 'coc-solargraph'
-      \, 'coc-python'
       \, 'coc-snippets'
       \, 'coc-vetur'
       \ ]
@@ -229,7 +239,8 @@ nnoremap <leader>gb :Gblame
 "#####vimwikiを正常動作させるのに必要らしい
 set nocompatible
 filetype plugin on
-syntax on
+autocmd FileType *.wiki syntax on
+
 "####coc-nvim(coc-prettier)でprettierを使用する。為の記述
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 "####coc-nevimのcoc-cssをscssファイルに適用させる
@@ -284,21 +295,5 @@ nnoremap ;l :HopLine<CR>
 
 "karb94/neoscroll.nvim用
 lua require('neoscroll').setup()
-
-"vdebug用
-let g:vdebug_options= {
-\    "port" : 9003,
-\    "server" : '',
-\    "timeout" : 20,
-\    "on_close" : 'detach',
-\    "break_on_open" : 1,
-\    "ide_key" : 'VDEBUG',
-\    "debug_window_level" : 0,
-\    "debug_file_level" : 0,
-\    "debug_file" : "",
-\    "watch_window_style" : 'expanded',
-\    "marker_default" : '⬦',
-\    "marker_closed_tree" : '▸',
-\    "marker_open_tree" : '▾'
-\}
-let g:vdebug_options['path_maps'] = {"~/work/My_pages": "~/work/My_pages"}
+"vimspector用
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
