@@ -38,4 +38,5 @@ telescope.setup{
 --telescope拡張機能追加
 telescope.load_extension('project')
 telescope.load_extension('fzy_native')
+telescope.load_extension('coc')
 EOF

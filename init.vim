@@ -11,10 +11,10 @@ set cursorline
 set nowrap "折り返さない
 " set inccommand=split
 set inccommand=nosplit
-syntax enable
 "python2無効
 let g:loaded_python_provider = 0
 
+syntax enable
 "########swpファイル、バックアップファイル、undoファイルを出力させない。
 set noswapfile
 set nobackup
@@ -183,6 +183,7 @@ if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
   Plug 'nvim-telescope/telescope-project.nvim'
   Plug 'nvim-telescope/telescope-fzy-native.nvim'
+  Plug 'fannheyward/telescope-coc.nvim'
   Plug 'karb94/neoscroll.nvim'
   "#onlynvim
   " neovim用のlua開発 -開始
@@ -232,14 +233,14 @@ nnoremap <leader>gp :Git push
 nnoremap <leader>gd :Gdiff
 nnoremap <leader>gv :Gvdiff
 "ほぼ記憶用
-nnoremap <leader>gl :Git log
-nnoremap <leader>gcl :Gclog
-nnoremap <leader>gb :Gblame
+nnoremap <leader>gl :Git log<CR>
+nnoremap <leader>gcl :Gclog<CR>
+nnoremap <leader>gb :Git blame<CR>
 
-"#####vimwikiを正常動作させるのに必要らしい
-set nocompatible
-filetype plugin on
-autocmd FileType *.wiki syntax on
+"#####vimwikiを正常動作させるのに必要らしい(2022/06/23追記：要らないので消す。)
+" set nocompatible
+" filetype plugin on
+" autocmd FileType *.wiki syntax enable
 
 "####coc-nvim(coc-prettier)でprettierを使用する。為の記述
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
