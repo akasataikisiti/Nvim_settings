@@ -42,6 +42,7 @@ nnoremap <Leader>m  :MRU
 nnoremap :vd :vertical diffsplit
 
 "####レジスタ使用しない削除機能
+vnoremap <leader>d "_d
 nnoremap <leader>d "_d
 nnoremap <leader>D "_D
 nnoremap x "_x
@@ -74,6 +75,8 @@ nmap sF <c-w>gf
 "Moving text
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-h> "zdh"zPgvhoho
+vnoremap <C-l> "zdl"zPgvlolo
 "vim-airlineタブの移動
 nnoremap :bp :bprevious<CR>
 nnoremap :bn :bnext<CR>
