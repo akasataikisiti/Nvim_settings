@@ -19,6 +19,8 @@ syntax enable
 set noswapfile
 set nobackup
 set noundofile
+"######diffで空白の違いを無視
+set diffopt=iwhite
 "##########検索設定############
 set ignorecase "大文字/小文字の区別なく検索する
 set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
@@ -80,6 +82,17 @@ vnoremap <C-l> "zdl"zPgvlolo
 "vim-airlineタブの移動
 nnoremap :bp :bprevious<CR>
 nnoremap :bn :bnext<CR>
+"
+"tabが一つだけだったら新しいタブを開く
+nnoremap gt :call TabnewOrGoNext()<CR>
+function! TabnewOrGoNext()
+  if 1 == tabpagenr('$')
+    execute ":tabedit"
+  else
+    execute ":tabnext"
+  endif
+endfunction
+
 "垂直分割での差分比較キーマップ
 nnoremap :vd :vertical diffsplit
 "ターミナルを垂直分割で開くショートカット
@@ -225,7 +238,7 @@ let g:closetag_filenames = '*.html,*.php'
 "######vim-airlineの設定
 let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
 "######カレントウィンドウを新規タブで開きなおす
-  nnoremap :tt :tab ba
+nnoremap :tt :tab ba<CR>
 "vim-fugitiveのコマンド省略形
 nnoremap <leader>ga :Git add %:p
 nnoremap <leader>gco :Git commit
