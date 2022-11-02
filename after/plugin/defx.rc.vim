@@ -25,6 +25,10 @@ autocmd FileType defx call s:defx_my_settings()
 	  \ defx#do_action('open')
 	  nnoremap <silent><buffer><expr> E
 	  \ defx#do_action('open', 'vsplit')
+	  nnoremap <silent><buffer><expr> O
+		\ defx#is_directory() ?
+		\ defx#do_action('open_directory') :
+		\ defx#do_action('multi', [[ 'drop', 'vsplit' ], 'quit'])
 	  nnoremap <silent><buffer><expr> P
 	  \ defx#do_action('open', 'pedit')
 	  nnoremap <silent><buffer><expr> o
