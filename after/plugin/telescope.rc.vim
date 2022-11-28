@@ -2,12 +2,14 @@ if !exists('g:loaded_telescope') | finish | endif
 
 nnoremap <silent> <Leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <silent> <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <silent> <Leader>fb <cmd>lua require('telescope.builtin').file_browser()<cr>
-nnoremap <silent> <Leader><Space> <cmd>Telescope buffers<cr>
-nnoremap <expr> <Leader>fu ':Telescope live_grep<cr>' .  expand('<cword>')
+" nnoremap <silent> <Leader>fb <cmd>lua require('telescope.builtin').file_browser()<cr>
+nnoremap <silent> <Leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <silent> <Leader><Space> <cmd>Telescope buffers<cr>
 nnoremap <expr> <Leader>fp ':Telescope project<cr>'
-xnoremap <leader>fv "zy:<C-u> Telescope live_grep<cr> <C-r>z
-nnoremap <leader>fz :<C-u> Telescope live_grep<cr> <C-r>z
+" xnoremap <leader>fv "zy:<C-u> Telescope live_grep<cr> I <C-r>z
+" nnoremap <leader>fz :<C-u> Telescope live_grep<cr> <C-r>/
+" nnoremap <expr> <Leader>fu ':Telescope live_grep<cr>' .  expand('<cword>')
+"
 " vimのhelptagsを検索できるけどいったんはずす
 " nnoremap <silent>  ht <cmd>Telescope help_tags<cr>
 

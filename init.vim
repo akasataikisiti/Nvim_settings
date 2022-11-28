@@ -38,7 +38,7 @@ set mouse=a
 "##########本読んで追加#########
 " <Leader>evの向いている先はvimとneovimで変えているので注意
 nnoremap <Leader>ev :e ~/.config/nvim/init.vim
-nnoremap <Leader>cv :e ~/dotfiles/cheatsheets/vim.txt
+nnoremap <Leader>cv :e ~/cheatsheets/vim.txt
 nnoremap <Leader>m  :MRU
 "#####垂直分割差分比較
 nnoremap :vd :vertical diffsplit
@@ -175,7 +175,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'thinca/vim-prettyprint'
-Plug 'thinca/vim-quickrun'
 Plug 'nekowasabi/nvimdoc-ja'
 Plug 'ap/vim-css-color'
 Plug 'Yggdroot/indentLine'
@@ -220,17 +219,14 @@ let g:coc_global_extensions = [
       \, 'coc-html'
       \, 'coc-css'
       \, 'coc-tsserver'
-      \, 'coc-solargraph'
       \, 'coc-snippets'
-      \, 'coc-vetur'
+      \, 'coc-prettier'
       \ ]
 "#######UltiSnipsのスニペットファイル（自作の)置き場の定義
-" for vim
-" let g:UltiSnipsSnippetsDir=expand("$HOME/dotfiles/.vim/UltiSnips")
 " for Neovim
 let g:UltiSnipsSnippetsDir=expand("$HOME/.config/nvim/UltiSnips")
 "########UltiSnipsの起動とリスト表示
-let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-l>"
 let g:UltiSnipsEditSplit="vertical"
 "######vim-closetagをphpファイルでも有効にする。
@@ -270,17 +266,19 @@ let g:fzf_checkout_git_options = '--sort=-committerdate'
 "terminalモードを使いやすく
 :tnoremap <c-[> <C-\><C-n>
 command! -nargs=* Ut split | wincmd j | resize 20 | terminal <args>
+command! -nargs=* T vsplit | wincmd l | terminal <args>
 autocmd TermOpen * startinsert
 
 "nvimにてcoc.nvimとかが出したpopupwindowのスクロール用
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
+" coc-nvimの設定ファイルに移動
+" if has('nvim-0.4.0') || has('patch-8.2.0750')
+"   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+"   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+"   inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+"   inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+"   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+"   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+" endif
 
 "treesitter用の設定
 lua <<EOF
