@@ -204,6 +204,7 @@ if has('nvim')
   " neovim用のlua開発 -開始
   Plug 'tjdevries/nlua.nvim'
   " neovim用のlua開発 -終わり
+  Plug 'skanehira/preview-uml.vim'
 endif
 call plug#end()
 
@@ -215,7 +216,6 @@ let g:coc_global_extensions = [
       \  'coc-lists'
       \, 'coc-json'
       \, 'coc-marketplace'
-      \, 'coc-pyright'
       \, 'coc-html'
       \, 'coc-css'
       \, 'coc-tsserver'
@@ -269,31 +269,6 @@ command! -nargs=* Ut split | wincmd j | resize 20 | terminal <args>
 command! -nargs=* T vsplit | wincmd l | terminal <args>
 autocmd TermOpen * startinsert
 
-"nvimにてcoc.nvimとかが出したpopupwindowのスクロール用
-" coc-nvimの設定ファイルに移動
-" if has('nvim-0.4.0') || has('patch-8.2.0750')
-"   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-"   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"   inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-"   inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-"   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-"   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-" endif
-
-"treesitter用の設定
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {
-      'toml',
-    }
-  },
-  indent = {
-    enable = true, -- これを設定することでtree-sitterによるインデントを有効にできます
-  }
-}
-EOF
 "######カラースキーム反映に必要
 set t_Co=256
 "#####カラースキーム追加
