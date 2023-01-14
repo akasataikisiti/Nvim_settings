@@ -14,6 +14,8 @@ set inccommand=nosplit
 "python2無効
 let g:loaded_python_provider = 0
 
+" nodeのパスを通す(brew使用してnをインストールしてそのうえにnodeをインストールした)
+let g:node_host_prog = "/usr/local/lib/node_modules/neovim/bin/cli.js"
 syntax enable
 "########swpファイル、バックアップファイル、undoファイルを出力させない。
 set noswapfile
@@ -273,7 +275,7 @@ autocmd TermOpen * startinsert
 set t_Co=256
 "#####カラースキーム追加
 set background=dark
-colorscheme hybrid
+" colorscheme hybrid
 
 "####hop.nvim使うのに必要
 lua<<EOF
